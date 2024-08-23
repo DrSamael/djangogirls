@@ -1,1 +1,1 @@
-#readme for djangogirls
+#readme for djangogirls app

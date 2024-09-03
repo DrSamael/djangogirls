@@ -1,10 +1,21 @@
 {% extends 'blog/base.html' %}
 
 {% block content %}
-    <h1>New post</h1>
+    {% if action %}
+        <h1>Edit {{ post.title }} post</h1>
+    {% else %}
+        <h1>New post</h1>
+    {% endif %}
+
     <form method="POST" class="post-form" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit" class="save btn btn-default">Save</button>
+        {% if post.image %}
+            <div>
+                <label>Current Image:</label><br>
+                <img src="{{ post.image.url }}" alt="Post Image" style="max-width: 400px;">
+            </div>
+        {% endif %}
+        <button type="submit" class="btn btn-success save-object">Save</button>
     </form>
 {% endblock %}

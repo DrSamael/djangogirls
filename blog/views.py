@@ -40,7 +40,7 @@ def post_edit(request, post_id):
             return redirect('post_detail', post_id=post.pk)
     else:
         form = PostForm(instance=post)
-    return render(request, 'blog/post_edit.html', {'form': form})
+    return render(request, 'blog/post_edit.html', {'form': form, 'action': True, 'post': post})
 
 def post_delete(request, post_id):
     post = get_object_or_404(Post, pk=post_id)

@@ -7,7 +7,7 @@ from .forms import PostForm
 
 
 def post_list(request):
-    posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date')
+    posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date').reverse()
     return render(request, 'blog/post_list.html', {'published_posts': posts})
 
 def post_detail(request, post_id):
@@ -17,7 +17,7 @@ def post_detail(request, post_id):
 
 def post_new(request):
     if request.method == "POST":
-        form = PostForm(request.POST)
+        form = PostForm(request.POST, request.FILES)
         if form.is_valid():
             post = form.save(commit=False)
             post.author = request.user
@@ -31,7 +31,7 @@ def post_new(request):
 def post_edit(request, post_id):
     post = get_object_or_404(Post, pk=post_id)
     if request.method == "POST":
-        form = PostForm(request.POST, instance=post)
+        form = PostForm(request.POST, request.FILES, instance=post)
         if form.is_valid():
             post = form.save(commit=False)
             post.author = request.user
@@ -41,3 +41,8 @@ def post_edit(request, post_id):
     else:
         form = PostForm(instance=post)
     return render(request, 'blog/post_edit.html', {'form': form})
+
+def post_delete(request, post_id):
+    post = get_object_or_404(Post, pk=post_id)
+    post.delete()
+    return redirect('post_list')

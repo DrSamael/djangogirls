@@ -2,7 +2,7 @@
 
 {% block content %}
     {% if action %}
-        <h1>Edit {{ post.title }} post</h1>
+        <h1>Edit "{{ post.title }}" post</h1>
     {% else %}
         <h1>New post</h1>
     {% endif %}
@@ -18,4 +18,8 @@
         {% endif %}
         <button type="submit" class="btn btn-success save-object">Save</button>
     </form>
+
+    {% if action %}
+        <p><a href="{% url 'post_detail' post_id=post.id %}">Back to the Detail page</a></p>
+    {% endif %}
 {% endblock %}

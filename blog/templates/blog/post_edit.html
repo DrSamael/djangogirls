@@ -1,25 +1,27 @@
 {% extends 'blog/base.html' %}
 
 {% block content %}
-    {% if action %}
-        <h1>Edit "{{ post.title }}" post</h1>
-    {% else %}
-        <h1>New post</h1>
-    {% endif %}
-
-    <form method="POST" class="post-form" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.as_p }}
-        {% if post.image %}
-            <div>
-                <label>Current Image:</label><br>
-                <img src="{{ post.image.url }}" alt="Post Image" style="max-width: 400px;">
-            </div>
+    <div class="post">
+        {% if action %}
+            <h1>Edit "{{ post.title }}" post</h1>
+        {% else %}
+            <h1>New post</h1>
         {% endif %}
-        <button type="submit" class="btn btn-success save-object">Save</button>
-    </form>
 
-    {% if action %}
-        <p><a href="{% url 'post_detail' post_id=post.id %}">Back to the Detail page</a></p>
-    {% endif %}
+        <form method="POST" class="post-form" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            {% if post.image %}
+                <div>
+                    <label>Current Image:</label><br>
+                    <img src="{{ post.image.url }}" alt="Post Image" style="max-width: 400px;">
+                </div>
+            {% endif %}
+            <button type="submit" class="btn btn-success save-object">Save</button>
+        </form>
+
+        {% if action %}
+            <p><a href="{% url 'post_detail' post_id=post.id %}">Back to the Detail page</a></p>
+        {% endif %}
+    </div>
 {% endblock %}
